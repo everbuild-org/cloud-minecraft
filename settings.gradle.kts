@@ -64,6 +64,7 @@ include("cloud-bungee")
 include("cloud-cloudburst")
 include("cloud-minecraft-extras")
 include("cloud-minecraft-signed-arguments")
+include("cloud-minestom")
 include("cloud-paper")
 include("cloud-paper-signed-arguments")
 include("cloud-sponge7")
@@ -77,6 +78,9 @@ findProject(":examples/example-paper")?.name = "example-paper"
 
 include("examples/example-bungee")
 findProject(":examples/example-bungee")?.name = "example-bungee"
+
+include("examples/example-minestom")
+findProject(":examples/example-minestom")?.name = "example-minestom"
 
 include("examples/example-velocity")
 findProject(":examples/example-velocity")?.name = "example-velocity"
