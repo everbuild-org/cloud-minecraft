@@ -24,6 +24,7 @@
 package org.incendo.cloud.examples.minestom;
 
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.CommandSender;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.GlobalEventHandler;
@@ -31,6 +32,10 @@ import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.LightingChunk;
 import net.minestom.server.instance.block.Block;
+import org.incendo.cloud.execution.ExecutionCoordinator;
+import org.incendo.cloud.minestom.MinestomCommandManager;
+
+import static org.incendo.cloud.parser.standard.IntegerParser.integerParser;
 
 public final class MinestomServer {
     public static void main(String[] args) {
@@ -50,6 +55,19 @@ public final class MinestomServer {
             event.getPlayer().setRespawnPoint(new Pos(0, 65, 0));
             event.getPlayer().setGameMode(GameMode.CREATIVE);
         });
+
+        MinestomCommandManager<CommandSender> commandManager = MinestomCommandManager.createNative(
+            ExecutionCoordinator.simpleCoordinator(),
+            (sender, permission) -> false
+        );
+
+        commandManager.command(
+            commandManager.commandBuilder("command")
+                .required("number", integerParser())
+                .handler(context ->
+                    context.sender().sendMessage("You entered " + context.get("number"))
+                )
+        );
 
         server.start("0.0.0.0", 25565);
     }
